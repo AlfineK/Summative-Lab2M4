@@ -42,4 +42,15 @@ class Task:
             "status":self.status,
             "assigned_to":self.assigned_to
         }
-    
+
+    @classmethod
+    def from_dict(cls,data):
+        return cls(
+            title=data.get("title"),
+            status=data.get("status","Pending"),
+            assigned_to=data.get("assigned_to","Unassigned")
+        )
+
+
+    def __repr__(self):
+        return f"Task(title={self.title!r}, status={self.status!r}, assigned_to={self.assigned_to!r})"
