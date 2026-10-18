@@ -1,4 +1,5 @@
 class Task:
+    _tasks={}
 
     def __init__(self,title,status="Pending",assigned_to="Unassigned"):
         self.title=title
@@ -50,6 +51,14 @@ class Task:
             status=data.get("status","Pending"),
             assigned_to=data.get("assigned_to","Unassigned")
         )
+
+    @classmethod
+    def get(cls,task_title):
+        return cls._tasks.get(task_title)
+
+    @classmethod
+    def all(cls):
+        return list(cls._tasks.values())
 
 
     def __repr__(self):

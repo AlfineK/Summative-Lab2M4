@@ -2,6 +2,7 @@ from models.task import Task
 
 
 class Projects:
+    _projects={}
     def __init__(self,title,description,due_date, tasks=None):
         self.title=title
         self.description=description
@@ -51,3 +52,33 @@ class Projects:
             self._tasks=value
         else:
             raise ValueError("Tasks must be provided as a list")
+
+    def to_dict(self):
+        return {
+            "title":self.title,
+            "description":self.description,
+            "due_date":self.due_date,
+            "tasks":[task.to_dict() for task in self.tasks]
+        }
+
+    @classmethod
+    def from_dict(cls,data):
+        tasks=[Task.from_dict(t) for t in data.get("tasks",[])]
+        return cls (
+            title=data.get("title"),
+            description=data.get("description"),
+            due_date=data.get("due_date"),
+            tasks=tasks
+
+        )
+
+    @classmethod
+    def get(cls, project_title):
+        return cls._projects.get(project_title)
+
+    @classmethod
+    def all(cls):
+        return list(cls._projects.values())
+
+    def __repr__(self):
+        return f"Project(title={self.title!r},description={self.description!r},due_date={self.due_date!r}, tasks_count={len(self.tasks)!r})"
