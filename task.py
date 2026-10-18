@@ -35,4 +35,11 @@ class Task:
         if not value or not value.strip():
             self._assigned_to="Unassigned"
         self._assigned_to=value.strip()
+
+    def to_dict(self):
+        return {
+            "title":self.title,
+            "status":self.status,
+            "assigned_to":self.assigned_to
+        }
     
