@@ -1,6 +1,6 @@
-from models.project import Projects
+from models.project import Project
 
-class Users:
+class User:
     _customers={}
     def __init__(self,name,email,projects=None):
         self.name=name
@@ -46,3 +46,23 @@ class Users:
             "email":self.email,
             "projects":[project.to_dict() for project in self.projects]
         }
+
+    @classmethod
+    def from_dict(cls,data):
+        projects=[Project.from_dict(p) for p in data.get("projects",[])]
+        return cls(
+            name=data.get("name"),
+            email=data.get("email"),
+            projects=projects
+        )
+
+    @classmethod
+    def get(cls,customer_id):
+        return cls._customers.get(customer_id)
+
+    @classmethod
+    def all(cls):
+        return list(cls._customers.values())
+
+    def __repr__(self):
+        return f"User(name={self.name!r},email={self.email!r},projects_count={len(self.projects)!r})"

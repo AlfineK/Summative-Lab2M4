@@ -1,7 +1,7 @@
 from models.task import Task
 
 
-class Projects:
+class Project:
     _projects={}
     def __init__(self,title,description,due_date, tasks=None):
         self.title=title
