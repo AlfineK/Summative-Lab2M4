@@ -1,0 +1,65 @@
+class Task:
+    _tasks={}
+
+    def __init__(self,title,status="Pending",assigned_to="Unassigned"):
+        self.title=title
+        self.status=status
+        self.assigned_to=assigned_to
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self,value):
+        if not value or not value.strip():
+            raise ValueError("Task title cannot be empty")
+        self._title=value.strip()
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self,value):
+        valid_statuses=["Pending","In progress","Complete"]
+        if  value not in valid_statuses:
+            raise ValueError(f"Invalid status {value}.Status must be one of these:{valid_statuses}")
+        self._status=value
+
+    @property
+    def assigned_to(self):
+        return self._assigned_to
+
+    @assigned_to.setter
+    def assigned_to(self,value):
+        if not value or not value.strip():
+            self._assigned_to="Unassigned"
+        self._assigned_to=value.strip()
+
+    def to_dict(self):
+        return {
+            "title":self.title,
+            "status":self.status,
+            "assigned_to":self.assigned_to
+        }
+
+    @classmethod
+    def from_dict(cls,data):
+        return cls(
+            title=data.get("title"),
+            status=data.get("status","Pending"),
+            assigned_to=data.get("assigned_to","Unassigned")
+        )
+
+    @classmethod
+    def get(cls,task_title):
+        return cls._tasks.get(task_title)
+
+    @classmethod
+    def all(cls):
+        return list(cls._tasks.values())
+
+
+    def __repr__(self):
+        return f"Task(title={self.title!r}, status={self.status!r}, assigned_to={self.assigned_to!r})"
