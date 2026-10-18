@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "projects": [
+            {
+                "title": "Website Redesign",
+                "description": "Revamp portal",
+                "due_date": "2026-12-31",
+                "tasks": []
+            }
+        ]
+    },
+    {
+        "name": "Kinya",
+        "email": "kinya@example.com",
+        "projects": [
+            {
+                "title": "Website Redsign",
+                "description": "Revamp portal",
+                "due_date": "2026-12-31",
+                "tasks": [
+                    {
+                        "title": "Setup Database",
+                        "status": "Complete",
+                        "assigned_to": "Alice"
+                    }
+                ]
+            }
+        ]
+    }
+]

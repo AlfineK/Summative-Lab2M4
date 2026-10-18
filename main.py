@@ -67,12 +67,12 @@ def main():
             return
         user.projects.append(Project(title=args.title,description=args.description, due_date=args.due))
         save_data(users)
-        print(f"Success! project{args.title!r} added to {user.name}")
+        print(f"Success! project{args.title!r} added to {user.name!r}")
 
     elif args.command=="list-projects":
         user=next((u for u in users if u.email==args.user or u.name==args.user),None)
         if not user:
-            print("Error: user{args.user!r} not found")
+            print(f"Error: user{args.user!r} not found")
             return
         if not user.projects:
             print(f"No projects found for {user.name}")
@@ -88,23 +88,23 @@ def main():
                 status_icon="+" if t.status=="Complete" else "**"
                 print(f"{status_icon} {t.title} [Assigned:{t.assigned_to}]" )
 
-    elif args.command =="add_task":
+    elif args.command =="add-task":
         user=next((u for u in users if u.email==args.user or u.name==args.user),None)
         if not user:
-            print("Error: user{args.user!r} not found")
+            print(f"Error: user{args.user!r} not found")
             return
         project=next((p for p in user.projects if p.title == args.project),None)
         if not project:
             print(f"Error: {args.project!r} not found")
             return
-        project.tasks.append(Task(title={args.title} ,assigned_to= {args.assigned}))
+        project.tasks.append(Task(title=args.title ,assigned_to= args.assigned))
         save_data(users)
         print(f"Success! Task {args.title!r} added to {project.title!r}")
 
     elif args.command=="complete-task":
         user=next((u for u in users if u.email==args.user or u.name==args.user),None)
         if not user:
-            print("Error: user{args.user!r} not found")
+            print(f"Error: user{args.user!r} not found")
             return
         project=next((p for p in user.projects if p.title == args.project),None)
         if not project:
@@ -114,8 +114,14 @@ def main():
         if not task:
             print(f"Error: Task {args.task!r} not found")
             return
-        task.status="complete"
+        task.status="Complete"
         save_data(users)
         print(f"Success! Task{task.title!r} marked as complete")
+
+    else:
+        parser.print_help()
+
+if __name__=="__main__":
+    main()
 
     
